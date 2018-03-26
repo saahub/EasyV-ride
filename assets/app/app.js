@@ -112,8 +112,27 @@
         }, function(response, status) {
           if (status === 'OK') {
             me.directionsDisplay.setDirections(response);
+            var inicio = response.routes[0].legs[0].inicio_location;
+            var final = response.routes[0].legs[0].final_location;
+            function marcador(ev){
+             new mapIcons.Marker({
+              position: {lat:latitud, lng:longitud},
+              animation: google.maps.Animation.DROP,
+              map: map,
+              icon:{
+                path:mapIcons.shapes.MAP_PIN,
+                fillColor:'yellow',
+                fillOpacity:1,
+                strokeColor:'',
+                strokeWeight:0
+              },
+              map_icon_label:'<span class="map-icon map-icon-bicycle-store"></span>'
+            }
+            marcador(inicio);
+            marcador(final);
           } else {
             window.alert('Directions request failed due to ' + status);
           }
         });
+        directionsDisplay.setOptions({ suppressMarkers: true});
       };
